@@ -1,0 +1,100 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: kira
+  ai:
+    mcp:
+      server:
+        name: kira
+        version: 0.1.0
+        stdio: true
+        type: SYNC
+        sse-message-endpoint: /mcp/message
+
+kira:
+  data-dir: ${user.home}/.kira/data
+  index-dir: ${kira.data-dir}/lucene
+  checkpoint-file: ${kira.data-dir}/checkpoint.json
+  models-dir: ${kira.data-dir}/models
+  max-search-results: 50
+  default-search-k: 10
+  candidate-k: 50
+  spec-max-ops: 200
+  embedding:
+    model-path: ${kira.models-dir}/bge-small.onnx
+    tokenizer-path: ${kira.models-dir}/tokenizer.json
+    dim: 384
+  reranker:
+    model-path: ${kira.models-dir}/reranker.onnx
+    tokenizer-path: ${kira.models-dir}/reranker-tokenizer.json
+    enabled: false
+  token-budget:
+    default-budget-tokens: 6000
+    chars-per-token: 4
+  executor:
+    index-threads: 4
+  graph:
+    engine: jgrapht
+    kuzu-dir: ${kira.data-dir}/graph
+  full-reindex:
+    batch-size: 200
+    parallel-files: 8
+  accept:
+    include:
+      - "**/*.java"
+      - "**/*.md"
+      - "**/*.markdown"
+      - "**/*.yml"
+      - "**/*.yaml"
+      - "**/*.json"
+      - "**/*.pdf"
+      - "**/*.docx"
+      - "**/*.html"
+      - "**/*.txt"
+    exclude:
+      - "**/target/**"
+      - "target/**"
+      - "**/.git/**"
+      - ".git/**"
+      - "**/.idea/**"
+      - "**/*.class"
+      - "**/*.jar"
+      - "**/*.war"
+      - "**/node_modules/**"
+      - "node_modules/**"
+      - "**/.DS_Store"
+  repos: []
+  respect-gitignore: true
+
+  # Example - single repo, single branch, auto-sync every 5 minutes
+  # repos:
+  #   - id: my-service
+  #     path: /home/user/projects/my-service
+  #     branches:
+  #       mode: SINGLE
+  #       tracked:
+  #         - main
+  #     auto-sync:
+  #       enabled: true
+  #       interval-seconds: 300
+  #     accept:
+  #       include:
+  #         - "src/**/*.java"
+  #         - "docs/**/*.md"
+  #       exclude:
+  #         - "src/test/**"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha

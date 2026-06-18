@@ -1,0 +1,129 @@
+@host = http://localhost:8080
+@repo = kira
+@repoDir = /home/peyman/Desktop/workstation/kira
+@gitSha = local
+@branch = main
+@fromSha = HEAD~1
+@toSha = HEAD
+
+### Health
+GET {{host}}/actuator/health
+
+### Swagger OpenAPI JSON
+GET {{host}}/v3/api-docs
+
+### Swagger UI
+GET {{host}}/swagger-ui.html
+
+### Index one file
+POST {{host}}/api/v1/index
+Content-Type: application/json
+
+{
+  "repo": "{{repo}}",
+  "repoDir": "{{repoDir}}",
+  "path": "README.md",
+  "gitSha": "{{gitSha}}",
+  "branch": "{{branch}}"
+}
+
+### Full repository reindex
+POST {{host}}/api/v1/index/full
+Content-Type: application/json
+
+{
+  "repo": "{{repo}}",
+  "repoDir": "{{repoDir}}",
+  "gitSha": "{{gitSha}}",
+  "branch": "{{branch}}"
+}
+
+### Git incremental reindex
+POST {{host}}/api/v1/index/incremental
+Content-Type: application/json
+
+{
+  "repo": "{{repo}}",
+  "repoDir": "{{repoDir}}",
+  "fromSha": "{{fromSha}}",
+  "toSha": "{{toSha}}",
+  "branch": "{{branch}}"
+}
+
+### Trigger configured repo sync
+POST {{host}}/api/v1/index/sync/{{repo}}
+
+### Index status
+GET {{host}}/api/v1/index/status
+
+### Hybrid search
+POST {{host}}/api/v1/search
+Content-Type: application/json
+
+{
+  "query": "how to start the service",
+  "repo": "{{repo}}",
+  "branch": "{{branch}}",
+  "k": 5,
+  "mode": "hybrid"
+}
+
+### BM25-only search
+POST {{host}}/api/v1/search
+Content-Type: application/json
+
+{
+  "query": "JavaParser graph",
+  "repo": "{{repo}}",
+  "branch": "{{branch}}",
+  "k": 5,
+  "mode": "bm25"
+}
+
+### Search only docs and knowledge chunks
+POST {{host}}/api/v1/search
+Content-Type: application/json
+
+{
+  "query": "model files",
+  "repo": "{{repo}}",
+  "branch": "{{branch}}",
+  "domain": "KNOWLEDGE",
+  "k": 10,
+  "mode": "hybrid"
+}
+
+### Search only code chunks
+POST {{host}}/api/v1/search
+Content-Type: application/json
+
+{
+  "query": "RetrievalOrchestrator",
+  "repo": "{{repo}}",
+  "branch": "{{branch}}",
+  "domain": "CODE",
+  "k": 10,
+  "mode": "hybrid"
+}
+
+### Answer context
+POST {{host}}/api/v1/answer-context
+Content-Type: application/json
+
+{
+  "query": "how does hybrid search work",
+  "repo": "{{repo}}",
+  "budgetTokens": 1200
+}
+
+### Get symbol
+GET {{host}}/api/v1/graph/symbol?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)
+
+### Get callers
+GET {{host}}/api/v1/graph/callers?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1
+
+### Get callees
+GET {{host}}/api/v1/graph/callees?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1
+
+### Kafka flow
+GET {{host}}/api/v1/graph/kafka/orders

@@ -37,7 +37,7 @@ This repo already has:
 It contains both:
 
 - `kira-stdio`: starts Kira as a child Java process.
-- `kira-http`: connects to a running Kira HTTP/SSE service at `http://localhost:8080/sse`.
+- `kira-http`: connects to a running Kira HTTP/SSE service at `http://localhost:8094/sse`.
 
 Build the JAR first:
 
@@ -77,7 +77,7 @@ Example HTTP/SSE server:
   "mcpServers": {
     "kira-http": {
       "transportType": "http",
-      "url": "http://localhost:8080/sse"
+      "url": "http://localhost:8094/sse"
     }
   }
 }

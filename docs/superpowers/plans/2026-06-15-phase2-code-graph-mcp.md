@@ -1135,8 +1135,8 @@ Expected: All tests pass.
 ```bash
 mvn spring-boot:run &
 sleep 8
-curl -s http://localhost:8080/actuator/health
-curl -s http://localhost:8080/api/v1/graph/callers/com.acme.PaymentService%23settle%28String%29
+curl -s http://localhost:8094/actuator/health
+curl -s http://localhost:8094/api/v1/graph/callers/com.acme.PaymentService%23settle%28String%29
 kill %1
 ```
 Expected: health=UP, callers=[] (empty graph until indexed).
@@ -1156,8 +1156,8 @@ Run:
 ```bash
 mvn test -q && mvn spring-boot:run &
 sleep 8
-curl -s http://localhost:8080/api/v1/graph/kafka/topic/orders
-curl -s http://localhost:8080/actuator/health
+curl -s http://localhost:8094/api/v1/graph/kafka/topic/orders
+curl -s http://localhost:8094/actuator/health
 kill %1
 ```
 

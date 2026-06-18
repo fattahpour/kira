@@ -62,7 +62,7 @@ Use this index to choose the right document for the current task. This index cov
 Index one file:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index \
+curl -X POST http://localhost:8094/api/v1/index \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -76,7 +76,7 @@ curl -X POST http://localhost:8080/api/v1/index \
 Index a full repo:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -89,7 +89,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 Search:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how to start the service",
@@ -103,7 +103,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Generate compact context:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/answer-context \
+curl -X POST http://localhost:8094/api/v1/answer-context \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how does Kira index and search files",

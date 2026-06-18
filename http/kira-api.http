@@ -1,4 +1,4 @@
-@host = http://localhost:8080
+@host = http://localhost:8094
 @repo = kira
 @repoDir = /home/peyman/Desktop/workstation/kira
 @gitSha = local

@@ -1021,7 +1021,7 @@ public List<SearchHit> hybridRerank(String query, SearchFilter filter, int k)
 ```bash
 mvn spring-boot:run &
 sleep 8
-curl -s http://localhost:8080/actuator/metrics | python3 -m json.tool | grep kira
+curl -s http://localhost:8094/actuator/metrics | python3 -m json.tool | grep kira
 kill %1
 ```
 Expected: `kira.search.requests`, `kira.search.latency`, etc. appear in the metrics list.
@@ -1095,8 +1095,8 @@ sudo systemctl status kira
 - [ ] **Step 3: Verify running**
 
 ```bash
-curl http://localhost:8080/actuator/health
-curl http://localhost:8080/api/v1/index/status 2>/dev/null || echo "endpoint not yet implemented"
+curl http://localhost:8094/actuator/health
+curl http://localhost:8094/api/v1/index/status 2>/dev/null || echo "endpoint not yet implemented"
 ```
 Expected: `{"status":"UP"}`.
 
@@ -1117,8 +1117,8 @@ mvn test -q
 # Fat JAR
 mvn package -DskipTests -q && java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar --kira.data-dir=/tmp/kira-test &
 sleep 10
-curl http://localhost:8080/actuator/health
-curl -s http://localhost:8080/actuator/metrics/kira.search.requests
+curl http://localhost:8094/actuator/health
+curl -s http://localhost:8094/actuator/metrics/kira.search.requests
 kill %1
 ```
 
@@ -1127,7 +1127,7 @@ kill %1
 Run golden eval against a real indexed codebase:
 ```bash
 # Index a real repo first
-curl -s -X POST http://localhost:8080/api/v1/index/full \
+curl -s -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{"repoPath":"/path/to/your/repo","repo":"myrepo"}'
 
@@ -1135,4 +1135,4 @@ curl -s -X POST http://localhost:8080/api/v1/index/full \
 mvn test -Dtest=GoldenSetEvalTest -Deval.enabled=true -q
 ```
 
-**Production system complete.** MCP server accessible at `localhost:8080` via streamable HTTP, or via stdio when launched as a subprocess from Claude Code / Codex / Gemini CLI.
+**Production system complete.** MCP server accessible at `localhost:8094` via streamable HTTP, or via stdio when launched as a subprocess from Claude Code / Codex / Gemini CLI.

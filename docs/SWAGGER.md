@@ -21,7 +21,7 @@ java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar
 ## Open Swagger UI
 
 ```text
-http://localhost:8080/swagger-ui.html
+http://localhost:8094/swagger-ui.html
 ```
 
 Swagger UI lets you inspect and call:
@@ -44,13 +44,13 @@ Swagger UI lets you inspect and call:
 JSON:
 
 ```text
-http://localhost:8080/v3/api-docs
+http://localhost:8094/v3/api-docs
 ```
 
 YAML, if needed:
 
 ```text
-http://localhost:8080/v3/api-docs.yaml
+http://localhost:8094/v3/api-docs.yaml
 ```
 
 ## Configuration

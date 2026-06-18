@@ -1007,7 +1007,7 @@ Expected: All tests pass, BUILD SUCCESS.
 ```bash
 mvn spring-boot:run &
 sleep 8
-curl -s -X POST http://localhost:8080/api/v1/search \
+curl -s -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"Spring Boot configuration","mode":"hybrid","k":5}' | python3 -m json.tool
 kill %1

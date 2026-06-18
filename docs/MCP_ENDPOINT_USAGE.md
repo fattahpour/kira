@@ -17,7 +17,7 @@ Kira supports two MCP connection styles:
 | Mode | Client Connects To | Best For |
 | --- | --- | --- |
 | Stdio | A `java -jar ...` command | One agent starts its own Kira process |
-| HTTP/SSE | `http://localhost:8080/sse` | One running Kira service shared by multiple clients |
+| HTTP/SSE | `http://localhost:8094/sse` | One running Kira service shared by multiple clients |
 
 Important HTTP paths:
 
@@ -29,7 +29,7 @@ Important HTTP paths:
 Most MCP clients should use:
 
 ```text
-http://localhost:8080/sse
+http://localhost:8094/sse
 ```
 
 Do not use `/mcp/message` as the client URL unless your MCP client specifically asks for the message endpoint.
@@ -56,7 +56,7 @@ MCP tools search the existing Kira index. Index at least one repo or document fo
 Example document folder:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "office-docs",
@@ -69,7 +69,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 Example code repo:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "backend-api",
@@ -125,7 +125,7 @@ java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar \
   --kira.data-dir=/tmp/kira-doc-agent-data \
   --spring.ai.mcp.server.stdio=false \
   --spring.ai.mcp.server.type=ASYNC \
-  --server.port=8080
+  --server.port=8094
 ```
 
 MCP client config:
@@ -134,7 +134,7 @@ MCP client config:
 {
   "mcpServers": {
     "kira": {
-      "url": "http://localhost:8080/sse"
+      "url": "http://localhost:8094/sse"
     }
   }
 }
@@ -143,7 +143,7 @@ MCP client config:
 Health check for the running service:
 
 ```bash
-curl http://localhost:8080/actuator/health
+curl http://localhost:8094/actuator/health
 ```
 
 Expected:
@@ -431,8 +431,8 @@ For API endpoint questions:
 HTTP MCP client cannot connect:
 
 - Confirm Kira is running with `--spring.ai.mcp.server.stdio=false`.
-- Confirm the client URL is `http://localhost:8080/sse`.
-- Confirm the service is healthy with `curl http://localhost:8080/actuator/health`.
+- Confirm the client URL is `http://localhost:8094/sse`.
+- Confirm the service is healthy with `curl http://localhost:8094/actuator/health`.
 
 Search returns no hits:
 

@@ -4,7 +4,7 @@
       "command": "java",
       "args": [
         "-jar",
-        "/home/peyman/Desktop/workstation/kira/target/ai-retrieval-0.1.0-SNAPSHOT.jar",
+        "<kira-install-dir>/target/ai-retrieval-0.1.0-SNAPSHOT.jar",
         "--spring.ai.mcp.server.stdio=true",
         "--spring.ai.mcp.server.type=SYNC",
         "--kira.reranker.enabled=false",
@@ -13,7 +13,7 @@
       "env": {}
     },
     "kira-http": {
-      "url": "http://localhost:8080/sse"
+      "url": "http://localhost:8094/sse"
     }
   }
 }

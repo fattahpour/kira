@@ -79,7 +79,7 @@ HTTP/SSE example:
   "mcp": {
     "kira": {
       "type": "remote",
-      "url": "http://localhost:8080/sse",
+      "url": "http://localhost:8094/sse",
       "enabled": true
     }
   }

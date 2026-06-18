@@ -78,7 +78,7 @@ Smoke-test server startup with an isolated index directory:
 
 ```bash
 mvn spring-boot:run -Dspring-boot.run.arguments=--kira.index-dir=/tmp/kira-smoke-mcp-gaps
-curl -s http://localhost:8080/actuator/health
+curl -s http://localhost:8094/actuator/health
 ```
 
 Expected health response:
@@ -92,7 +92,7 @@ Expected health response:
 - `mvn test -q` passed.
 - Spring MCP registration reported 17 registered tools during this phase. Current registration after the search/token gaps implementation is 19 tools.
 - `mvn spring-boot:run` with a temporary index directory started successfully.
-- `curl -s http://localhost:8080/actuator/health` returned `{"status":"UP"}`.
+- `curl -s http://localhost:8094/actuator/health` returned `{"status":"UP"}`.
 
 The default startup path first failed because the normal Lucene index was locked at `/home/user/.kira/data/lucene/write.lock`. Final startup verification used an isolated temporary index directory to avoid touching the live local index.
 

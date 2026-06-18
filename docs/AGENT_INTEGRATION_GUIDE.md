@@ -623,7 +623,7 @@ Pattern: use graph tools to find what is relevant, then call `get_symbol` only f
 When an agent writes new code and then immediately queries it, the index will miss the new file unless reindexed. Use the incremental endpoint:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/incremental \
+curl -X POST http://localhost:8094/api/v1/index/incremental \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "my-service",
@@ -906,7 +906,7 @@ Or start Kira in HTTP mode and point Codex at the SSE endpoint:
 java -jar ai-retrieval-0.1.0-SNAPSHOT.jar \
   --spring.ai.mcp.server.stdio=false \
   --spring.ai.mcp.server.type=ASYNC \
-  --server.port=8080
+  --server.port=8094
 ```
 
 Codex MCP config:
@@ -915,7 +915,7 @@ Codex MCP config:
   "mcp": {
     "servers": {
       "kira": {
-        "url": "http://localhost:8080/sse",
+        "url": "http://localhost:8094/sse",
         "transport": "sse"
       }
     }
@@ -934,7 +934,7 @@ Gemini CLI supports MCP via HTTP SSE. Start Kira in async HTTP mode (same as abo
   "tools": {
     "mcp": {
       "kira": {
-        "url": "http://localhost:8080/sse"
+        "url": "http://localhost:8094/sse"
       }
     }
   }

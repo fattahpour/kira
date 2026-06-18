@@ -21,6 +21,6 @@ public class OpenApiConfig {
                 .description("Local AI retrieval service for code, documents, hybrid search, answer context, and code graph queries.")
                 .contact(new Contact().name("Kira"))
                 .license(new License().name("Internal")))
-            .servers(List.of(new Server().url("http://localhost:8080").description("Local development")));
+            .servers(List.of(new Server().url("http://localhost:8094").description("Local development")));
     }
 }

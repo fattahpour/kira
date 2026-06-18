@@ -64,7 +64,7 @@ For packaged runtime:
 java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar
 ```
 
-Use a different port if `8080` is busy:
+Use a different port if `8094` is busy:
 
 ```bash
 java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar --server.port=9090
@@ -82,7 +82,7 @@ java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar \
 Health check:
 
 ```bash
-curl http://localhost:8080/actuator/health
+curl http://localhost:8094/actuator/health
 ```
 
 Expected:
@@ -94,13 +94,13 @@ Expected:
 Swagger UI:
 
 ```text
-http://localhost:8080/swagger-ui.html
+http://localhost:8094/swagger-ui.html
 ```
 
 OpenAPI JSON:
 
 ```text
-http://localhost:8080/v3/api-docs
+http://localhost:8094/v3/api-docs
 ```
 
 ## 5. Index Content
@@ -110,7 +110,7 @@ Kira must index files before search returns useful results.
 Index the whole Kira repository:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -123,7 +123,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 Index or reindex one file:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index \
+curl -X POST http://localhost:8094/api/v1/index \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -136,7 +136,7 @@ curl -X POST http://localhost:8080/api/v1/index \
 Index Git changes between two commits:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/incremental \
+curl -X POST http://localhost:8094/api/v1/index/incremental \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -197,8 +197,8 @@ kira:
 Trigger sync manually and inspect status:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/sync/kira
-curl http://localhost:8080/api/v1/index/status
+curl -X POST http://localhost:8094/api/v1/index/sync/kira
+curl http://localhost:8094/api/v1/index/status
 ```
 
 Checkpoint state is written to `kira.checkpoint-file`, defaulting to `${kira.data-dir}/checkpoint.json`.
@@ -248,7 +248,7 @@ kira:
 After changing acceptance filters, restart Kira and run a full reindex so old chunks are removed from Lucene:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -263,7 +263,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 Hybrid search uses BM25 keyword search plus vector KNN search:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how to start the service",
@@ -276,7 +276,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Branch-filtered search:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how to start the service",
@@ -290,7 +290,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 BM25-only search is faster and is useful for exact identifiers:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "FullReindexService",
@@ -303,7 +303,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Filter to code:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "GraphQueries callers",
@@ -316,7 +316,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Filter to documentation and knowledge:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "performance tuning",
@@ -347,7 +347,7 @@ Workflow:
 Important variables:
 
 ```http
-@host = http://localhost:8080
+@host = http://localhost:8094
 @repo = kira
 @repoDir = /home/example/projects/kira
 @gitSha = local
@@ -359,7 +359,7 @@ Important variables:
 Open:
 
 ```text
-http://localhost:8080/swagger-ui.html
+http://localhost:8094/swagger-ui.html
 ```
 
 Recommended Swagger workflow:
@@ -592,7 +592,7 @@ kira:
 For lower latency, request a smaller budget:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/answer-context \
+curl -X POST http://localhost:8094/api/v1/answer-context \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how does hybrid search work",
@@ -626,7 +626,7 @@ Reindexing is required after changing embedding models because vectors are store
 Expose metrics:
 
 ```text
-http://localhost:8080/actuator/metrics
+http://localhost:8094/actuator/metrics
 ```
 
 Useful metric names:
@@ -643,13 +643,13 @@ kira.tokens.returned.last
 Example:
 
 ```bash
-curl http://localhost:8080/actuator/metrics/kira.search.latency
+curl http://localhost:8094/actuator/metrics/kira.search.latency
 ```
 
 Benchmark manually:
 
 ```bash
-time curl -s -X POST http://localhost:8080/api/v1/search \
+time curl -s -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "retrieval orchestrator",

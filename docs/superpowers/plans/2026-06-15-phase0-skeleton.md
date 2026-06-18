@@ -1694,14 +1694,14 @@ Expected: All tests pass.
 ```bash
 mvn spring-boot:run &
 sleep 5
-curl -s -X POST http://localhost:8080/api/v1/search \
+curl -s -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"install","k":5}' | python3 -m json.tool
 ```
 Expected: `{"hits":[],"total":0}` (index is empty; server is running).
 
 ```bash
-curl -s http://localhost:8080/actuator/health
+curl -s http://localhost:8094/actuator/health
 ```
 Expected: `{"status":"UP"}`.
 

@@ -1503,7 +1503,7 @@ Expected: all tests pass, `BUILD SUCCESS`.
 ```bash
 mvn spring-boot:run -Dspring-boot.run.arguments=--kira.index-dir=/tmp/kira-smoke-gaps &
 sleep 15
-curl -s http://localhost:8080/actuator/health
+curl -s http://localhost:8094/actuator/health
 ```
 
 Expected: `{"status":"UP"}`.

@@ -975,10 +975,10 @@ Run:
 mvn test -q && mvn spring-boot:run &
 sleep 8
 # Test answer_context REST endpoint (or via MCP client)
-curl -s -X POST http://localhost:8080/api/v1/search \
+curl -s -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"payment settlement flow","mode":"hybrid","k":5}'
-curl -s http://localhost:8080/actuator/health
+curl -s http://localhost:8094/actuator/health
 kill %1
 ```
 

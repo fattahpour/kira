@@ -108,7 +108,7 @@ Start Kira:
 java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar \
   --spring.ai.mcp.server.stdio=false \
   --spring.ai.mcp.server.type=ASYNC \
-  --server.port=8080
+  --server.port=8094
 ```
 
 Then add an MCP server in VS Code with the command palette:
@@ -120,7 +120,7 @@ MCP: Add Server
 Use this URL:
 
 ```text
-http://localhost:8080/sse
+http://localhost:8094/sse
 ```
 
 If your VS Code setup uses workspace MCP configuration, add a server equivalent to:
@@ -129,7 +129,7 @@ If your VS Code setup uses workspace MCP configuration, add a server equivalent 
 {
   "mcpServers": {
     "kira": {
-      "url": "http://localhost:8080/sse"
+      "url": "http://localhost:8094/sse"
     }
   }
 }
@@ -182,10 +182,10 @@ Copilot ignores repository instructions:
 
 Kira MCP tools are unavailable:
 
-- Confirm Kira is running on `http://localhost:8080/sse`.
+- Confirm Kira is running on `http://localhost:8094/sse`.
 - Confirm MCP is enabled for your GitHub Copilot plan or organization policy.
 - Confirm VS Code lists the Kira MCP server.
-- Check `curl http://localhost:8080/actuator/health`.
+- Check `curl http://localhost:8094/actuator/health`.
 
 Search returns nothing:
 

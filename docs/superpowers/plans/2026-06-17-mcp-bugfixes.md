@@ -825,7 +825,7 @@ Smoke-test server startup:
 
 ```bash
 mvn spring-boot:run -Dspring-boot.run.arguments=--kira.index-dir=/tmp/kira-smoke-bugfix
-curl -s http://localhost:8080/actuator/health
+curl -s http://localhost:8094/actuator/health
 ```
 
 Expected: `{"status":"UP"}`.

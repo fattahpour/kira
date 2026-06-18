@@ -116,7 +116,7 @@ You can override settings at startup:
 
 ```bash
 java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar \
-  --server.port=8080 \
+  --server.port=8094 \
   --kira.data-dir="$HOME/.kira/data" \
   --kira.reranker.enabled=false
 ```
@@ -193,13 +193,13 @@ java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar
 Default URL:
 
 ```text
-http://localhost:8080
+http://localhost:8094
 ```
 
 Health check:
 
 ```bash
-curl http://localhost:8080/actuator/health
+curl http://localhost:8094/actuator/health
 ```
 
 Expected response:
@@ -267,13 +267,13 @@ http/kira-api.http
 Swagger UI:
 
 ```text
-http://localhost:8080/swagger-ui.html
+http://localhost:8094/swagger-ui.html
 ```
 
 OpenAPI JSON:
 
 ```text
-http://localhost:8080/v3/api-docs
+http://localhost:8094/v3/api-docs
 ```
 
 ## Index Files
@@ -281,7 +281,7 @@ http://localhost:8080/v3/api-docs
 Index one file:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index \
+curl -X POST http://localhost:8094/api/v1/index \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -294,7 +294,7 @@ curl -X POST http://localhost:8080/api/v1/index \
 Index one file for a specific branch:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index \
+curl -X POST http://localhost:8094/api/v1/index \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -308,7 +308,7 @@ curl -X POST http://localhost:8080/api/v1/index \
 Index the whole repository:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -321,7 +321,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 Run a Git incremental index between two commits:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/incremental \
+curl -X POST http://localhost:8094/api/v1/index/incremental \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -391,8 +391,8 @@ kira:
 Manual sync and status:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/sync/kira
-curl http://localhost:8080/api/v1/index/status
+curl -X POST http://localhost:8094/api/v1/index/sync/kira
+curl http://localhost:8094/api/v1/index/status
 ```
 
 Auto-sync stores checkpoints in `kira.checkpoint-file`, defaulting to `${kira.data-dir}/checkpoint.json`.
@@ -402,7 +402,7 @@ Auto-sync stores checkpoints in `kira.checkpoint-file`, defaulting to `${kira.da
 Hybrid search, the default:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "hybrid retrieval lucene",
@@ -418,7 +418,7 @@ Omit `branch` to search all branch-unaware and branch-aware chunks for the selec
 BM25-only search:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "JavaParser code graph",
@@ -431,7 +431,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Filter to code:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "PaymentService settle",
@@ -444,7 +444,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Filter to knowledge/docs:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how to start the service",
@@ -459,7 +459,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 `answer-context` retrieves, optionally reranks, and compacts results into a token-budgeted context string.
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/answer-context \
+curl -X POST http://localhost:8094/api/v1/answer-context \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how does hybrid search work",
@@ -473,25 +473,25 @@ curl -X POST http://localhost:8080/api/v1/answer-context \
 Get a symbol:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/symbol?fqn=com.acme.PaymentService%23settle(String)'
+curl 'http://localhost:8094/api/v1/graph/symbol?fqn=com.acme.PaymentService%23settle(String)'
 ```
 
 Get callers:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/callers?fqn=com.acme.PaymentService%23settle(String)&depth=1'
+curl 'http://localhost:8094/api/v1/graph/callers?fqn=com.acme.PaymentService%23settle(String)&depth=1'
 ```
 
 Get callees:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/callees?fqn=com.acme.PaymentService%23settle(String)&depth=1'
+curl 'http://localhost:8094/api/v1/graph/callees?fqn=com.acme.PaymentService%23settle(String)&depth=1'
 ```
 
 Get Kafka flow:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/kafka/orders'
+curl 'http://localhost:8094/api/v1/graph/kafka/orders'
 ```
 
 Graph data is populated when Java files are indexed.
@@ -554,7 +554,7 @@ If the service starts but search returns no hits:
 3. If using branch-aware indexing, confirm `branch` matches the indexed branch.
 4. Try BM25-only search with `"mode": "bm25"`.
 
-If startup fails because port 8080 is busy:
+If startup fails because port 8094 is busy:
 
 ```bash
 java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar --server.port=9090

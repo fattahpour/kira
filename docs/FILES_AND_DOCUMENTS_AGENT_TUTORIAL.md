@@ -101,7 +101,7 @@ Leave this terminal running.
 In a second terminal, confirm the service is healthy:
 
 ```bash
-curl http://localhost:8080/actuator/health
+curl http://localhost:8094/actuator/health
 ```
 
 Expected response:
@@ -115,7 +115,7 @@ Expected response:
 Use a logical repo name such as `office-docs`, `team-knowledge`, or `customer-docs`.
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "office-docs",
@@ -134,7 +134,7 @@ If you change `.gitignore` or Kira acceptance filters later, run this full reind
 Ask a question over the full folder:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "what is the vacation policy",
@@ -149,7 +149,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Search inside one folder:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "approved engineering budget",
@@ -165,7 +165,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Search a policy topic:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "refund policy and support escalation",
@@ -182,7 +182,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Use `/api/v1/answer-context` when an agent needs compact context instead of raw search JSON:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/answer-context \
+curl -X POST http://localhost:8094/api/v1/answer-context \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "summarize the 2026 budget by department and mention the source file",
@@ -352,13 +352,13 @@ java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar \
   --kira.data-dir=/tmp/kira-doc-agent-data \
   --spring.ai.mcp.server.stdio=false \
   --spring.ai.mcp.server.type=ASYNC \
-  --server.port=8080
+  --server.port=8094
 ```
 
 Agent MCP SSE URL:
 
 ```text
-http://localhost:8080/sse
+http://localhost:8094/sse
 ```
 
 Kira is configured with `/mcp/message` as the SSE message endpoint, but MCP clients normally point at the SSE URL. The local project also includes `.mcp.json` as an example MCP client configuration. For more MCP setup details, see:
@@ -386,7 +386,7 @@ Use these conventions for better retrieval:
 For a normal folder without Git history, run full reindex again:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "office-docs",
@@ -399,7 +399,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 If the folder is a Git repository, you can use incremental indexing:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/incremental \
+curl -X POST http://localhost:8094/api/v1/index/incremental \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "office-docs",

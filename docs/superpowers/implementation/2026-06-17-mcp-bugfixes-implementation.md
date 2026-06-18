@@ -76,7 +76,7 @@ Smoke-test server startup with an isolated index directory:
 
 ```bash
 mvn spring-boot:run -Dspring-boot.run.arguments=--kira.index-dir=/tmp/kira-smoke-bugfix
-curl -s http://localhost:8080/actuator/health
+curl -s http://localhost:8094/actuator/health
 ```
 
 Expected health response:
@@ -92,7 +92,7 @@ Expected health response:
 - `mvn test -q` passed.
 - Spring MCP registration still reported 17 registered tools during this bug-fix phase. Current registration after the search/token gaps implementation is 19 tools.
 - `mvn spring-boot:run` with `/tmp/kira-smoke-bugfix` started successfully.
-- `curl -s http://localhost:8080/actuator/health` returned `{"status":"UP"}`.
+- `curl -s http://localhost:8094/actuator/health` returned `{"status":"UP"}`.
 
 ## Notes
 

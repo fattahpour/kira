@@ -214,7 +214,7 @@ Filter changes affect future indexing. After changing `.gitignore` or `applicati
 Full reindex:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "my-service",
@@ -227,7 +227,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 If the repo is configured under `kira.repos`, you can trigger configured sync:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/sync/my-service
+curl -X POST http://localhost:8094/api/v1/index/sync/my-service
 ```
 
 ## 6. Verify The Result
@@ -235,13 +235,13 @@ curl -X POST http://localhost:8080/api/v1/index/sync/my-service
 Check index status:
 
 ```bash
-curl http://localhost:8080/api/v1/index/status
+curl http://localhost:8094/api/v1/index/status
 ```
 
 Search for a file or folder you expect to be excluded:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "target node_modules .env",

@@ -68,7 +68,7 @@ Leave this terminal running.
 Open a second terminal and run:
 
 ```bash
-curl http://localhost:8080/actuator/health
+curl http://localhost:8094/actuator/health
 ```
 
 Expected response:
@@ -80,7 +80,7 @@ Expected response:
 ### Step 5. Index one file first
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index \
+curl -X POST http://localhost:8094/api/v1/index \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -96,7 +96,7 @@ Expected result: a JSON response with indexed chunks for `README.md`.
 ### Step 6. Search the indexed file
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how do I start the service",
@@ -112,7 +112,7 @@ Expected result: search hits from `README.md`, including startup commands or ser
 ### Step 7. Index the whole project
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -127,7 +127,7 @@ Full indexing processes accepted files such as Java sources, Markdown docs, YAML
 ### Step 8. Search only code
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "RetrievalOrchestrator hybrid search",
@@ -144,7 +144,7 @@ Expected result: hits from Java files around retrieval orchestration and hybrid 
 ### Step 9. Generate answer context
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/answer-context \
+curl -X POST http://localhost:8094/api/v1/answer-context \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how does Kira index and search files",
@@ -160,13 +160,13 @@ Expected result: a compact text context block that can be pasted into another AI
 Java files populate the code graph during indexing. Try a known symbol:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/symbol?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)'
+curl 'http://localhost:8094/api/v1/graph/symbol?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)'
 ```
 
 Then inspect callees:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/callees?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1'
+curl 'http://localhost:8094/api/v1/graph/callees?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1'
 ```
 
 Expected result: JSON describing the symbol and related method calls if the symbol was extracted.
@@ -255,7 +255,7 @@ java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar --kira.data-dir=/tmp/kira-data
 Health check:
 
 ```bash
-curl http://localhost:8080/actuator/health
+curl http://localhost:8094/actuator/health
 ```
 
 Expected:
@@ -267,13 +267,13 @@ Expected:
 Swagger UI:
 
 ```text
-http://localhost:8080/swagger-ui.html
+http://localhost:8094/swagger-ui.html
 ```
 
 OpenAPI JSON:
 
 ```text
-http://localhost:8080/v3/api-docs
+http://localhost:8094/v3/api-docs
 ```
 
 More Swagger details are in:
@@ -287,7 +287,7 @@ docs/SWAGGER.md
 Kira searches only indexed content. Index one file first:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index \
+curl -X POST http://localhost:8094/api/v1/index \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -300,7 +300,7 @@ curl -X POST http://localhost:8080/api/v1/index \
 Index that file into a specific branch:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index \
+curl -X POST http://localhost:8094/api/v1/index \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -314,7 +314,7 @@ curl -X POST http://localhost:8080/api/v1/index \
 Index the whole repository:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/full \
+curl -X POST http://localhost:8094/api/v1/index/full \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -327,7 +327,7 @@ curl -X POST http://localhost:8080/api/v1/index/full \
 Index Git changes between two commits:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/incremental \
+curl -X POST http://localhost:8094/api/v1/index/incremental \
   -H 'Content-Type: application/json' \
   -d '{
     "repo": "kira",
@@ -409,13 +409,13 @@ kira:
 Trigger a configured repo manually:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/index/sync/kira
+curl -X POST http://localhost:8094/api/v1/index/sync/kira
 ```
 
 Check checkpoints and last sync timestamps:
 
 ```bash
-curl http://localhost:8080/api/v1/index/status
+curl http://localhost:8094/api/v1/index/status
 ```
 
 ## 7. Search
@@ -423,7 +423,7 @@ curl http://localhost:8080/api/v1/index/status
 Hybrid search uses BM25 plus vector KNN and fuses results with Reciprocal Rank Fusion:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how to start the service",
@@ -436,7 +436,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Search only one indexed branch:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how to start the service",
@@ -450,7 +450,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 BM25-only search:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "Spring Boot actuator",
@@ -463,7 +463,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Search only code chunks:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "RetrievalOrchestrator",
@@ -476,7 +476,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Search only docs and knowledge chunks:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/search \
+curl -X POST http://localhost:8094/api/v1/search \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "model files",
@@ -491,7 +491,7 @@ curl -X POST http://localhost:8080/api/v1/search \
 Answer context retrieves relevant hits and compacts them into a budgeted text block:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/answer-context \
+curl -X POST http://localhost:8094/api/v1/answer-context \
   -H 'Content-Type: application/json' \
   -d '{
     "query": "how does hybrid search work",
@@ -509,25 +509,25 @@ Graph endpoints are populated when Java files are indexed.
 Get one symbol:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/symbol?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)'
+curl 'http://localhost:8094/api/v1/graph/symbol?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)'
 ```
 
 Get callers:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/callers?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1'
+curl 'http://localhost:8094/api/v1/graph/callers?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1'
 ```
 
 Get callees:
 
 ```bash
-curl 'http://localhost:8080/api/v1/graph/callees?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1'
+curl 'http://localhost:8094/api/v1/graph/callees?fqn=com.acme.airetrieval.retrieve.RetrievalOrchestrator%23hybrid(String,%20SearchFilter,%20int)&depth=1'
 ```
 
 Get Kafka flow:
 
 ```bash
-curl http://localhost:8080/api/v1/graph/kafka/orders
+curl http://localhost:8094/api/v1/graph/kafka/orders
 ```
 
 ## 10. Use Swagger UI
@@ -535,7 +535,7 @@ curl http://localhost:8080/api/v1/graph/kafka/orders
 Start the app, then open:
 
 ```text
-http://localhost:8080/swagger-ui.html
+http://localhost:8094/swagger-ui.html
 ```
 
 Useful Swagger workflow:
@@ -550,7 +550,7 @@ Useful Swagger workflow:
 The raw OpenAPI document is available at:
 
 ```text
-http://localhost:8080/v3/api-docs
+http://localhost:8094/v3/api-docs
 ```
 
 ## 11. Use IntelliJ HTTP Client
@@ -574,7 +574,7 @@ In IntelliJ:
 Important variables:
 
 ```http
-@host = http://localhost:8080
+@host = http://localhost:8094
 @repo = kira
 @repoDir = /home/example/projects/kira
 @gitSha = local
@@ -629,10 +629,10 @@ Search returns no hits:
 Swagger UI does not load:
 
 - Confirm the app is running.
-- Open `http://localhost:8080/v3/api-docs`.
-- If `/v3/api-docs` works, refresh `http://localhost:8080/swagger-ui.html`.
+- Open `http://localhost:8094/v3/api-docs`.
+- If `/v3/api-docs` works, refresh `http://localhost:8094/swagger-ui.html`.
 
-Port 8080 is busy:
+Port 8094 is busy:
 
 ```bash
 java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar --server.port=9090

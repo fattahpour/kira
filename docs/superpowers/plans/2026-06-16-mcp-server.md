@@ -4,7 +4,7 @@
 
 **Goal:** Wire the existing `McpTools` methods into a working Spring AI MCP server reachable by Claude Code via both stdio and HTTP/SSE transport.
 
-**Architecture:** Spring AI 1.0.0 MCP server requires an explicit `ToolCallbackProvider` bean — `@Tool` annotated methods are NOT auto-registered without one. `MethodToolCallbackProvider.builder().toolObjects(bean).build()` wraps the bean. Two transports are configured: stdio (for Claude Code CLI process spawning) and HTTP/SSE (for `http://localhost:8080/sse` Claude Code remote connection). Two new tools are added: `index_status` (Lucene doc count) and `expand_context` (multi-hop graph BFS).
+**Architecture:** Spring AI 1.0.0 MCP server requires an explicit `ToolCallbackProvider` bean — `@Tool` annotated methods are NOT auto-registered without one. `MethodToolCallbackProvider.builder().toolObjects(bean).build()` wraps the bean. Two transports are configured: stdio (for Claude Code CLI process spawning) and HTTP/SSE (for `http://localhost:8094/sse` Claude Code remote connection). Two new tools are added: `index_status` (Lucene doc count) and `expand_context` (multi-hop graph BFS).
 
 **Tech Stack:** Spring AI 1.0.0 (`spring-ai-starter-mcp-server-webmvc`), `MethodToolCallbackProvider`, `ToolCallbackProvider`, Apache Lucene 10 `IndexReader.numDocs()`, JUnit 5, Mockito.
 
@@ -545,7 +545,7 @@ git commit -m "feat(mcp): add expand_context tool and GraphQueries.expandContext
 
 ### Task 4: HTTP/SSE transport
 
-Add `spring-ai-starter-mcp-server-webmvc` so the MCP server is reachable at `http://localhost:8080/sse` in addition to stdio. Both transports coexist: stdio is for Claude Code CLI process spawning; HTTP is for a running server.
+Add `spring-ai-starter-mcp-server-webmvc` so the MCP server is reachable at `http://localhost:8094/sse` in addition to stdio. Both transports coexist: stdio is for Claude Code CLI process spawning; HTTP is for a running server.
 
 **Files:**
 
@@ -655,7 +655,7 @@ This file tells Claude Code how to connect to Kira as an MCP server. Two connect
       "env": {}
     },
     "kira-http": {
-      "url": "http://localhost:8080/sse"
+      "url": "http://localhost:8094/sse"
     }
   }
 }

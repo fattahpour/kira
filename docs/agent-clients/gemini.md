@@ -61,7 +61,7 @@ Example using Kira HTTP/SSE:
 {
   "mcpServers": {
     "kira": {
-      "url": "http://localhost:8080/sse"
+      "url": "http://localhost:8094/sse"
     }
   }
 }
@@ -73,7 +73,7 @@ Start Kira separately for HTTP/SSE:
 java -jar target/ai-retrieval-0.1.0-SNAPSHOT.jar \
   --spring.ai.mcp.server.stdio=false \
   --spring.ai.mcp.server.type=ASYNC \
-  --server.port=8080
+  --server.port=8094
 ```
 
 ## 3. Optional: Use Multiple Instruction File Names

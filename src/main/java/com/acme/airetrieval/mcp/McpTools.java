@@ -1,6 +1,7 @@
 package com.acme.airetrieval.mcp;
 
 import com.acme.airetrieval.graph.GraphQueries;
+import com.acme.airetrieval.index.IndexMonitorService;
 import com.acme.airetrieval.index.model.SearchFilter;
 import com.acme.airetrieval.ingest.FullReindexService;
 import com.acme.airetrieval.ingest.model.EndpointInfo;
@@ -29,14 +30,17 @@ public class McpTools {
     private final RetrievalOrchestrator retrieval;
     private final GraphQueries graph;
     private final FullReindexService reindexService;
+    private final IndexMonitorService indexMonitorService;
     private final String serverVersion;
 
     public McpTools(RetrievalOrchestrator retrieval, GraphQueries graph,
                     FullReindexService reindexService,
+                    IndexMonitorService indexMonitorService,
                     @Value("${spring.ai.mcp.server.version:0.1.0}") String serverVersion) {
         this.retrieval = retrieval;
         this.graph = graph;
         this.reindexService = reindexService;
+        this.indexMonitorService = indexMonitorService;
         this.serverVersion = serverVersion;
     }
 
@@ -234,10 +238,10 @@ public class McpTools {
         }
     }
 
-    @Tool(description = "Return number of indexed documents and server version")
+    @Tool(description = "Return number of indexed documents, server version, per-repo/branch/domain counts, and active indexing flag")
     public IndexStatus index_status() {
         try {
-            return new IndexStatus(retrieval.indexDocCount(), serverVersion, null, false);
+            return indexMonitorService.buildStatus(serverVersion);
         } catch (Exception e) {
             return new IndexStatus(-1, serverVersion + " [ERROR: " + e.getMessage() + "]", null, false);
         }

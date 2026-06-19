@@ -1,6 +1,7 @@
 package com.acme.airetrieval.mcp;
 
 import com.acme.airetrieval.graph.GraphQueries;
+import com.acme.airetrieval.index.IndexMonitorService;
 import com.acme.airetrieval.index.model.SearchFilter;
 import com.acme.airetrieval.index.model.SearchHit;
 import com.acme.airetrieval.ingest.FullReindexService;
@@ -28,6 +29,7 @@ class McpToolsTest {
     RetrievalOrchestrator retrieval;
     GraphQueries graph;
     FullReindexService reindexService;
+    IndexMonitorService indexMonitorService;
     McpTools tools;
 
     @BeforeEach
@@ -35,12 +37,14 @@ class McpToolsTest {
         retrieval = mock(RetrievalOrchestrator.class);
         graph = mock(GraphQueries.class);
         reindexService = mock(FullReindexService.class);
-        tools = new McpTools(retrieval, graph, reindexService, "0.1.0-test");
+        indexMonitorService = mock(IndexMonitorService.class);
+        tools = new McpTools(retrieval, graph, reindexService, indexMonitorService, "0.1.0-test");
     }
 
     @Test
     void index_status_returns_doc_count() throws Exception {
-        when(retrieval.indexDocCount()).thenReturn(42);
+        when(indexMonitorService.buildStatus("0.1.0-test"))
+            .thenReturn(new IndexStatus(42, "0.1.0-test", List.of(), false));
         IndexStatus status = tools.index_status();
         assertThat(status.totalDocs()).isEqualTo(42);
         assertThat(status.serverVersion()).isEqualTo("0.1.0-test");
@@ -48,7 +52,7 @@ class McpToolsTest {
 
     @Test
     void index_status_returns_minus_one_on_error() throws Exception {
-        when(retrieval.indexDocCount()).thenThrow(new RuntimeException("disk error"));
+        when(indexMonitorService.buildStatus("0.1.0-test")).thenThrow(new RuntimeException("disk error"));
         IndexStatus status = tools.index_status();
         assertThat(status.totalDocs()).isEqualTo(-1);
     }

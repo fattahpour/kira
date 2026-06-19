@@ -75,6 +75,10 @@ public class BranchSyncScheduler {
         );
     }
 
+    public java.time.Instant getLastSync(String repoId) {
+        return lastSync.get(repoId);
+    }
+
     private void runSync(RepoConfig repo) {
         Instant start = Instant.now();
         try {

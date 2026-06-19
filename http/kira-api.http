@@ -56,6 +56,9 @@ POST {{host}}/api/v1/index/sync/{{repo}}
 ### Index status
 GET {{host}}/api/v1/index/status
 
+### Rich index monitor
+GET {{host}}/api/v1/index/monitor
+
 ### Hybrid search
 POST {{host}}/api/v1/search
 Content-Type: application/json

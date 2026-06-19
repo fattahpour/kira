@@ -103,8 +103,21 @@ Returns:
 
 ```json
 {
-  "docCount": 1250,
-  "version": "0.1.0"
+  "totalDocs": 1250,
+  "serverVersion": "0.1.0",
+  "repos": [
+    {
+      "repo": "kira",
+      "branch": "main",
+      "codeDocs": 900,
+      "knowledgeDocs": 350,
+      "totalDocs": 1250,
+      "lastSha": "abc1234",
+      "lastSyncAt": "2026-06-18T10:30:00Z",
+      "indexing": false
+    }
+  ],
+  "anyIndexing": false
 }
 ```
 

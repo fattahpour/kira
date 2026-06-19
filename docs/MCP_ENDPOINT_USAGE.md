@@ -176,7 +176,7 @@ Kira exposes these MCP tools:
 | `get_design_for_symbol(fqn)` | Find design or documentation chunks related to a code symbol |
 | `get_code_for_doc(docId)` | Find code chunks related to a documentation chunk |
 | `check_spec_vs_impl(repo)` | Compare indexed OpenAPI endpoints with implemented REST endpoints in the same repo |
-| `index_status()` | Return indexed document count and server version |
+| `index_status()` | Return indexed document counts, repo/branch breakdown, and live indexing state |
 
 For parameter details, return shapes, and recommended calling patterns for all tools, see [MCP Tool References](MCP_KIRA_TOOL_REFERENCES.md).
 
@@ -392,6 +392,28 @@ check_spec_vs_impl(
 ```
 
 Java REST endpoint nodes are repo-tagged, so this comparison is scoped to the `repo` you pass instead of mixing endpoints from every indexed repo.
+
+`index_status()` returns rich index monitoring data:
+
+```json
+{
+  "totalDocs": 1234,
+  "serverVersion": "0.1.0",
+  "repos": [
+    {
+      "repo": "backend-api",
+      "branch": "main",
+      "codeDocs": 900,
+      "knowledgeDocs": 334,
+      "totalDocs": 1234,
+      "lastSha": "abc1234",
+      "lastSyncAt": "2026-06-18T10:30:00Z",
+      "indexing": false
+    }
+  ],
+  "anyIndexing": false
+}
+```
 
 ## 8. Agent Usage Pattern
 

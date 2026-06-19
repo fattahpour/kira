@@ -31,6 +31,7 @@ Swagger UI lets you inspect and call:
 - `POST /api/v1/index/full`
 - `POST /api/v1/index/sync/{repoId}`
 - `GET /api/v1/index/status`
+- `GET /api/v1/index/monitor`
 - `POST /api/v1/search`
 - `POST /api/v1/answer-context`
 - `GET /api/v1/graph/symbol`

@@ -243,7 +243,7 @@ refresh_index(repo, repoDir)
 | `repo` | string | Repo id to assign to indexed chunks |
 | `repoDir` | string | Absolute path to the repo or document folder |
 
-Returns: `IndexStatus` — `docCount`, `version`. On failure, `docCount` is `-1` and `version` includes an error message.
+Returns: `IndexStatus` — `totalDocs`, `serverVersion`, `repos`, and `anyIndexing`. For `refresh_index`, `repos` is `null` and `anyIndexing` is `false`. On failure, `totalDocs` is `-1` and `serverVersion` includes an error message.
 
 ---
 
@@ -311,13 +311,33 @@ Endpoint comparison is repo-scoped. Java endpoint nodes carry `REPO:<repo>` tags
 
 ### `index_status`
 
-Check how many documents are indexed and the server version.
+Check how many documents are indexed, grouped by configured repo and branch, with live indexing state.
 
 ```
 index_status()
 ```
 
-Returns: `IndexStatus` — `docCount`, `version`.
+Returns: `IndexStatus`:
+
+```json
+{
+  "totalDocs": 1234,
+  "serverVersion": "0.1.0",
+  "repos": [
+    {
+      "repo": "myrepo",
+      "branch": "main",
+      "codeDocs": 900,
+      "knowledgeDocs": 334,
+      "totalDocs": 1234,
+      "lastSha": "abc1234",
+      "lastSyncAt": "2026-06-18T10:30:00Z",
+      "indexing": false
+    }
+  ],
+  "anyIndexing": false
+}
+```
 
 ---
 
@@ -878,7 +898,7 @@ After connecting, verify:
 index_status()
 ```
 
-Expected: `{"docCount": N, "version": "0.1.0"}`.
+Expected: `{"totalDocs": N, "serverVersion": "0.1.0", "repos": [...], "anyIndexing": false}`.
 
 ---
 

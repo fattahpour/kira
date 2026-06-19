@@ -393,9 +393,10 @@ Manual sync and status:
 ```bash
 curl -X POST http://localhost:8094/api/v1/index/sync/kira
 curl http://localhost:8094/api/v1/index/status
+curl http://localhost:8094/api/v1/index/monitor
 ```
 
-Auto-sync stores checkpoints in `kira.checkpoint-file`, defaulting to `${kira.data-dir}/checkpoint.json`.
+Auto-sync stores checkpoints in `kira.checkpoint-file`, defaulting to `${kira.data-dir}/checkpoint.json`. The monitor endpoint returns total indexed docs, per-repo/branch code and knowledge counts, last SHA, last sync time, and active indexing flags.
 
 ## Search
 

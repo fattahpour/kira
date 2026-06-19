@@ -418,6 +418,12 @@ Check checkpoints and last sync timestamps:
 curl http://localhost:8094/api/v1/index/status
 ```
 
+Check rich index monitor data:
+
+```bash
+curl http://localhost:8094/api/v1/index/monitor
+```
+
 ## 7. Search
 
 Hybrid search uses BM25 plus vector KNN and fuses results with Reciprocal Rank Fusion:

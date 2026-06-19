@@ -199,6 +199,7 @@ Trigger sync manually and inspect status:
 ```bash
 curl -X POST http://localhost:8094/api/v1/index/sync/kira
 curl http://localhost:8094/api/v1/index/status
+curl http://localhost:8094/api/v1/index/monitor
 ```
 
 Checkpoint state is written to `kira.checkpoint-file`, defaulting to `${kira.data-dir}/checkpoint.json`.

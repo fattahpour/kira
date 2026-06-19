@@ -47,6 +47,26 @@ class NrtLuceneSearcherTest {
     }
 
     @Test
+    void countByFilter() throws Exception {
+        var dir = Files.createTempDirectory("nrt-cnt");
+        try (var indexer = new LuceneIndexer(dir); var searcher = new NrtLuceneSearcher(indexer.getWriter())) {
+            indexer.upsert(new Chunk("c1", "repo1", "main", "Foo.java", Domain.CODE, "CLASS",
+                "Foo", null, null, List.of(), "sha1", "h1", "java", "class Foo {}", null));
+            indexer.upsert(new Chunk("k1", "repo1", "main", "README.md", Domain.KNOWLEDGE, "MARKDOWN",
+                null, "README", null, List.of(), "sha1", "h2", "md", "# Readme", null));
+            indexer.commit();
+            searcher.maybeReopen();
+
+            assertThat(searcher.count(new SearchFilter("repo1", "CODE", null, null, "main"))).isEqualTo(1);
+            assertThat(searcher.count(new SearchFilter("repo1", "KNOWLEDGE", null, null, "main"))).isEqualTo(1);
+            assertThat(searcher.count(new SearchFilter("repo1", null, null, null, "main"))).isEqualTo(2);
+            assertThat(searcher.count(new SearchFilter("repo2", null, null, null, null))).isEqualTo(0);
+        } finally {
+            cleanup(dir);
+        }
+    }
+
+    @Test
     void searchByNameFragment_returnsMatchingFqns() throws Exception {
         var dir = Files.createTempDirectory("nrt-frag");
         try (var indexer = new LuceneIndexer(dir); var searcher = new NrtLuceneSearcher(indexer.getWriter())) {

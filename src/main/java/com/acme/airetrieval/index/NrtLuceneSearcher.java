@@ -12,6 +12,7 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.KnnFloatVectorQuery;
+import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.SearcherFactory;
@@ -65,6 +66,22 @@ public final class NrtLuceneSearcher implements AutoCloseable {
             return toHits(searcher, searcher.search(query, k).scoreDocs);
         } finally {
             manager.release(searcher);
+        }
+    }
+
+    public int count(SearchFilter filter) throws IOException {
+        IndexSearcher s = manager.acquire();
+        try {
+            Query base = new MatchAllDocsQuery();
+            Query filterQuery = buildFilter(filter);
+            Query q = filterQuery == null ? base :
+                new BooleanQuery.Builder()
+                    .add(base, BooleanClause.Occur.MUST)
+                    .add(filterQuery, BooleanClause.Occur.FILTER)
+                    .build();
+            return s.count(q);
+        } finally {
+            manager.release(s);
         }
     }
 

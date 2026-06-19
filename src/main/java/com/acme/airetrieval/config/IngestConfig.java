@@ -58,7 +58,8 @@ public class IngestConfig {
 
     @Bean
     public BranchSyncService branchSyncService(BranchResolver branchResolver, CheckpointStore checkpointStore,
-                                               IndexService indexService, FullReindexService fullReindexService) {
-        return new BranchSyncService(branchResolver, checkpointStore, indexService, fullReindexService);
+                                               IndexService indexService, FullReindexService fullReindexService,
+                                               IndexActivityTracker activityTracker) {
+        return new BranchSyncService(branchResolver, checkpointStore, indexService, fullReindexService, activityTracker);
     }
 }

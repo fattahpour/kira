@@ -1,9 +1,12 @@
 package com.acme.airetrieval.api;
 
 import com.acme.airetrieval.api.dto.IndexRequest;
+import com.acme.airetrieval.index.IndexMonitorService;
 import com.acme.airetrieval.ingest.BranchSyncScheduler;
 import com.acme.airetrieval.ingest.FullReindexService;
 import com.acme.airetrieval.ingest.IndexService;
+import com.acme.airetrieval.retrieve.dto.IndexStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,12 +23,17 @@ public class IndexController {
     private final IndexService indexService;
     private final FullReindexService fullReindexService;
     private final BranchSyncScheduler syncScheduler;
+    private final IndexMonitorService indexMonitorService;
+    private final String serverVersion;
 
     public IndexController(IndexService indexService, FullReindexService fullReindexService,
-                           BranchSyncScheduler syncScheduler) {
+                           BranchSyncScheduler syncScheduler, IndexMonitorService indexMonitorService,
+                           @Value("${spring.ai.mcp.server.version:0.1.0}") String serverVersion) {
         this.indexService = indexService;
         this.fullReindexService = fullReindexService;
         this.syncScheduler = syncScheduler;
+        this.indexMonitorService = indexMonitorService;
+        this.serverVersion = serverVersion;
     }
 
     @PostMapping
@@ -54,5 +62,10 @@ public class IndexController {
     @GetMapping("/status")
     public Map<String, Object> status() {
         return syncScheduler.status();
+    }
+
+    @GetMapping("/monitor")
+    public IndexStatus monitor() throws Exception {
+        return indexMonitorService.buildStatus(serverVersion);
     }
 }

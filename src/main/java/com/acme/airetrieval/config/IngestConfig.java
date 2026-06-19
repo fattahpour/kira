@@ -51,8 +51,9 @@ public class IngestConfig {
     @Bean
     public FullReindexService fullReindexService(IndexService indexService, NrtLuceneSearcher searcher,
                                                   ExecutorService executor, ApplicationProps props,
-                                                  FilterRegistry filterRegistry) {
-        return new FullReindexService(indexService, searcher, executor, props, filterRegistry);
+                                                  FilterRegistry filterRegistry,
+                                                  IndexActivityTracker activityTracker) {
+        return new FullReindexService(indexService, searcher, executor, props, filterRegistry, activityTracker);
     }
 
     @Bean

@@ -9,6 +9,7 @@ import com.acme.airetrieval.ingest.BranchSyncService;
 import com.acme.airetrieval.ingest.CheckpointStore;
 import com.acme.airetrieval.ingest.FilterRegistry;
 import com.acme.airetrieval.ingest.FullReindexService;
+import com.acme.airetrieval.ingest.IndexActivityTracker;
 import com.acme.airetrieval.ingest.IndexService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,11 @@ public class IngestConfig {
     @Bean
     public BranchResolver branchResolver() {
         return new BranchResolver();
+    }
+
+    @Bean
+    public IndexActivityTracker indexActivityTracker() {
+        return new IndexActivityTracker();
     }
 
     @Bean

@@ -184,9 +184,9 @@ public class McpTools {
         @ToolParam(description = "absolute path to the repository directory on disk") String repoDir) {
         try {
             var result = reindexService.reindex(repo, Path.of(repoDir), "local");
-            return new IndexStatus(result.indexed(), serverVersion + " [reindex complete: " + repo + "]");
+            return new IndexStatus(result.indexed(), serverVersion + " [reindex complete: " + repo + "]", null, false);
         } catch (Exception e) {
-            return new IndexStatus(-1, serverVersion + " [ERROR: " + e.getMessage() + "]");
+            return new IndexStatus(-1, serverVersion + " [ERROR: " + e.getMessage() + "]", null, false);
         }
     }
 
@@ -237,9 +237,9 @@ public class McpTools {
     @Tool(description = "Return number of indexed documents and server version")
     public IndexStatus index_status() {
         try {
-            return new IndexStatus(retrieval.indexDocCount(), serverVersion);
+            return new IndexStatus(retrieval.indexDocCount(), serverVersion, null, false);
         } catch (Exception e) {
-            return new IndexStatus(-1, serverVersion + " [ERROR: " + e.getMessage() + "]");
+            return new IndexStatus(-1, serverVersion + " [ERROR: " + e.getMessage() + "]", null, false);
         }
     }
 }
